@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Restream Decoder by Lightwave</title>
+    <title>Stock Manager by Lightwave</title>
     <link rel="icon" type="image/png" href="{{ asset('lightwave.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
@@ -145,7 +145,7 @@
     <main class="hero">
         <section class="card">
             <div class="title-wrap">
-                <h1 class="title">Restream Decoder</h1>
+                <h1 class="title">Stock Manager</h1>
                 <p class="subtitle">by <span class="brand">Lightwave</span></p>
             </div>
             <div class="logo-box">
