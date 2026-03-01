@@ -2,49 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Currency;
 use App\Models\Product;
-use App\Models\StockMovement;
+use App\Models\Purchase;
+use App\Models\Sale;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $totalProducts = Product::count();
-        $activeProducts = Product::where('is_active', true)->count();
-        $lowStockProducts = Product::whereColumn('quantity', '<=', 'min_quantity')->count();
-        $outOfStockProducts = Product::where('quantity', '<=', 0)->count();
-
-        $inventoryCostValue = (float) Product::query()
+        $availableItems = Product::where('is_active', true)->count();
+        $totalStockAmount = (float) Product::query()
             ->selectRaw('COALESCE(SUM(quantity * cost_price), 0) as total')
             ->value('total');
+        $purchasingCount = Purchase::count();
+        $salesCount = Sale::count();
 
-        $inventorySalesValue = (float) Product::query()
-            ->selectRaw('COALESCE(SUM(quantity * selling_price), 0) as total')
-            ->value('total');
-
-        $recentMovements = StockMovement::query()
-            ->with(['product:id,sku,name,unit', 'user:id,name'])
-            ->orderByDesc('moved_at')
+        $recentPurchases = Purchase::query()
+            ->with(['product:id,name,sku', 'source:id,name'])
+            ->orderByDesc('purchased_at')
             ->orderByDesc('id')
-            ->limit(10)
+            ->limit(6)
             ->get();
 
-        $criticalProducts = Product::query()
-            ->whereColumn('quantity', '<=', 'min_quantity')
-            ->orderBy('quantity')
-            ->limit(8)
-            ->get(['id', 'sku', 'name', 'quantity', 'min_quantity', 'unit']);
+        $recentSales = Sale::query()
+            ->with(['product:id,name,sku'])
+            ->orderByDesc('sold_at')
+            ->orderByDesc('id')
+            ->limit(6)
+            ->get();
+
+        $defaultCurrency = Currency::query()->where('is_default', true)->first();
+        $currencySymbol = $defaultCurrency?->symbol ?? '$';
 
         return view('dashboard', compact(
-            'totalProducts',
-            'activeProducts',
-            'lowStockProducts',
-            'outOfStockProducts',
-            'inventoryCostValue',
-            'inventorySalesValue',
-            'recentMovements',
-            'criticalProducts'
+            'availableItems',
+            'totalStockAmount',
+            'purchasingCount',
+            'salesCount',
+            'recentPurchases',
+            'recentSales',
+            'currencySymbol'
         ));
     }
 }
-

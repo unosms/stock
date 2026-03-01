@@ -1,0 +1,82 @@
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="text-xl font-bold text-slate-900">Purchasing Report</h2>
+    </x-slot>
+
+    <div class="space-y-5">
+        <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+            <form method="GET" action="{{ route('reports.purchasing') }}" class="grid grid-cols-1 gap-3 md:grid-cols-5">
+                <div>
+                    <x-input-label for="item_id" :value="'Item'" />
+                    <select id="item_id" name="item_id"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <option value="">All items</option>
+                        @foreach($items as $item)
+                            <option value="{{ $item->id }}" @selected((string) $itemId === (string) $item->id)>{{ $item->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <x-input-label for="from" :value="'From'" />
+                    <x-text-input id="from" name="from" type="date" class="mt-1 block w-full" :value="$from" />
+                </div>
+                <div>
+                    <x-input-label for="to" :value="'To'" />
+                    <x-text-input id="to" name="to" type="date" class="mt-1 block w-full" :value="$to" />
+                </div>
+                <div class="flex items-end gap-2 md:col-span-2">
+                    <x-primary-button type="submit">Filter</x-primary-button>
+                    <a href="{{ route('reports.purchasing') }}" class="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">Reset</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                <p class="text-sm text-slate-500">Total Purchased Quantity</p>
+                <p class="mt-2 text-2xl font-extrabold text-slate-900">{{ number_format($totalPurchasingQty) }}</p>
+            </div>
+            <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                <p class="text-sm text-slate-500">Total Purchasing Amount</p>
+                <p class="mt-2 text-2xl font-extrabold text-slate-900">{{ $currencySymbol }} {{ number_format($totalPurchasingAmount, 2) }}</p>
+            </div>
+        </div>
+
+        <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-slate-200">
+                    <thead class="bg-slate-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Date</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Item</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Source</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Price</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Qty</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 bg-white">
+                        @forelse($purchases as $purchase)
+                            <tr>
+                                <td class="px-4 py-3 text-sm text-slate-700">{{ $purchase->purchased_at?->format('Y-m-d H:i') }}</td>
+                                <td class="px-4 py-3 text-sm text-slate-900">{{ $purchase->product?->name }}</td>
+                                <td class="px-4 py-3 text-sm text-slate-700">{{ $purchase->source?->name ?? 'N/A' }}</td>
+                                <td class="px-4 py-3 text-right text-sm text-slate-700">{{ number_format($purchase->unit_price, 2) }}</td>
+                                <td class="px-4 py-3 text-right text-sm text-slate-900">{{ number_format($purchase->quantity) }}</td>
+                                <td class="px-4 py-3 text-right text-sm font-semibold text-slate-900">{{ number_format($purchase->total_price, 2) }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="px-4 py-8 text-center text-sm text-slate-500">No data found.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+            <div class="border-t border-slate-100 px-4 py-3">
+                {{ $purchases->links() }}
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
