@@ -68,7 +68,7 @@
             </form>
 
             <div class="mt-5 overflow-hidden rounded-lg border border-slate-200">
-                <table class="w-full table-fixed divide-y divide-slate-200">
+                <table class="w-full table-fixed divide-y divide-slate-200" style="width:100%; table-layout:fixed; border-collapse:collapse;">
                     <colgroup>
                         <col style="width: 14%;">
                         <col style="width: 30%;">
@@ -78,27 +78,27 @@
                     </colgroup>
                     <thead class="bg-slate-50">
                         <tr>
-                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Code</th>
-                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Name</th>
-                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Symbol</th>
-                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Default</th>
-                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Action</th>
+                            <th class="px-4 py-3 text-xs font-semibold uppercase text-slate-500" style="text-align:left;">Code</th>
+                            <th class="px-4 py-3 text-xs font-semibold uppercase text-slate-500" style="text-align:left;">Name</th>
+                            <th class="px-4 py-3 text-xs font-semibold uppercase text-slate-500" style="text-align:left;">Symbol</th>
+                            <th class="px-4 py-3 text-xs font-semibold uppercase text-slate-500" style="text-align:left;">Default</th>
+                            <th class="px-4 py-3 text-xs font-semibold uppercase text-slate-500" style="text-align:right;">Action</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 bg-white">
                         @forelse($currencies as $currency)
                             <tr>
-                                <td class="px-4 py-3 align-middle text-sm font-semibold text-slate-900">{{ $currency->code }}</td>
-                                <td class="px-4 py-3 align-middle text-sm text-slate-700">{{ $currency->name }}</td>
-                                <td class="px-4 py-3 align-middle text-sm text-slate-700">{{ $currency->symbol }}</td>
-                                <td class="px-4 py-3 align-middle text-sm">
+                                <td class="px-4 py-3 align-middle text-sm font-semibold text-slate-900" style="text-align:left;">{{ $currency->code }}</td>
+                                <td class="px-4 py-3 align-middle text-sm text-slate-700" style="text-align:left;">{{ $currency->name }}</td>
+                                <td class="px-4 py-3 align-middle text-sm text-slate-700" style="text-align:left;">{{ $currency->symbol }}</td>
+                                <td class="px-4 py-3 align-middle text-sm" style="text-align:left;">
                                     @if($currency->is_default)
                                         <span class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-700">Default</span>
                                     @else
                                         <span class="text-slate-400">No</span>
                                     @endif
                                 </td>
-                                <td class="px-4 py-3 align-middle text-right">
+                                <td class="px-4 py-3 align-middle" style="text-align:right;">
                                     @if(!$currency->is_default)
                                         <form method="POST" action="{{ route('settings.currencies.default') }}">
                                             @csrf

@@ -44,7 +44,7 @@
 
         <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
             <div class="overflow-x-auto">
-                <table class="min-w-full table-fixed divide-y divide-slate-200" style="width:100%;">
+                <table class="min-w-full table-fixed divide-y divide-slate-200" style="width:100%; table-layout:fixed; border-collapse:collapse;">
                     <colgroup>
                         <col style="width:19%;">
                         <col style="width:23%;">
@@ -55,23 +55,23 @@
                     </colgroup>
                     <thead class="bg-slate-50">
                         <tr>
-                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500 whitespace-nowrap">Date</th>
-                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Customer</th>
-                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Item</th>
-                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500 whitespace-nowrap">Price</th>
-                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500 whitespace-nowrap">Qty</th>
-                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500 whitespace-nowrap">Total</th>
+                            <th class="px-4 py-3 text-xs font-semibold uppercase text-slate-500 whitespace-nowrap" style="text-align:left;">Date</th>
+                            <th class="px-4 py-3 text-xs font-semibold uppercase text-slate-500" style="text-align:left;">Customer</th>
+                            <th class="px-4 py-3 text-xs font-semibold uppercase text-slate-500" style="text-align:left;">Item</th>
+                            <th class="px-4 py-3 text-xs font-semibold uppercase text-slate-500 whitespace-nowrap" style="text-align:right;">Price</th>
+                            <th class="px-4 py-3 text-xs font-semibold uppercase text-slate-500 whitespace-nowrap" style="text-align:right;">Qty</th>
+                            <th class="px-4 py-3 text-xs font-semibold uppercase text-slate-500 whitespace-nowrap" style="text-align:right;">Total</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 bg-white">
                         @forelse($sales as $sale)
                             <tr>
-                                <td class="px-4 py-3 align-middle text-sm text-slate-700 whitespace-nowrap">{{ $sale->sold_at?->format('Y-m-d H:i') }}</td>
-                                <td class="px-4 py-3 align-middle text-sm text-slate-900">{{ $sale->customer_name }}</td>
-                                <td class="px-4 py-3 align-middle text-sm text-slate-900">{{ $sale->product?->name }}</td>
-                                <td class="px-4 py-3 align-middle text-right text-sm text-slate-700 whitespace-nowrap">{{ number_format($sale->unit_price, 2) }}</td>
-                                <td class="px-4 py-3 align-middle text-right text-sm text-slate-900 whitespace-nowrap">{{ number_format($sale->quantity) }}</td>
-                                <td class="px-4 py-3 align-middle text-right text-sm font-semibold text-slate-900 whitespace-nowrap">{{ number_format($sale->total_price, 2) }}</td>
+                                <td class="px-4 py-3 align-middle text-sm text-slate-700 whitespace-nowrap" style="text-align:left;">{{ $sale->sold_at?->format('Y-m-d H:i') }}</td>
+                                <td class="px-4 py-3 align-middle text-sm text-slate-900" style="text-align:left;">{{ $sale->customer_name }}</td>
+                                <td class="px-4 py-3 align-middle text-sm text-slate-900" style="text-align:left;">{{ $sale->product?->name }}</td>
+                                <td class="px-4 py-3 align-middle text-sm text-slate-700 whitespace-nowrap" style="text-align:right;">{{ number_format($sale->unit_price, 2) }}</td>
+                                <td class="px-4 py-3 align-middle text-sm text-slate-900 whitespace-nowrap" style="text-align:right;">{{ number_format($sale->quantity) }}</td>
+                                <td class="px-4 py-3 align-middle text-sm font-semibold text-slate-900 whitespace-nowrap" style="text-align:right;">{{ number_format($sale->total_price, 2) }}</td>
                             </tr>
                         @empty
                             <tr>
