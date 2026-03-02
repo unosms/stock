@@ -59,6 +59,12 @@
                 </div>
 
                 <div>
+                    <x-input-label for="selling_price" :value="'Sales Price'" />
+                    <x-text-input id="selling_price" name="selling_price" type="number" step="0.01" min="0" class="mt-1 block w-full"
+                        :value="old('selling_price')" required />
+                </div>
+
+                <div>
                     <x-input-label for="quantity" :value="'Quantity'" />
                     <x-text-input id="quantity" name="quantity" type="number" min="1" class="mt-1 block w-full"
                         :value="old('quantity', 1)" required />
@@ -67,7 +73,7 @@
                 <div>
                     <x-input-label for="purchased_at" :value="'Date & Time'" />
                     <x-text-input id="purchased_at" name="purchased_at" type="datetime-local" class="mt-1 block w-full"
-                        :value="old('purchased_at')" />
+                        :value="old('purchased_at', now()->format('Y-m-d\\TH:i'))" />
                 </div>
 
                 <div>
@@ -90,6 +96,7 @@
                             <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Item</th>
                             <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Source</th>
                             <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Price</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Sales Price</th>
                             <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Qty</th>
                             <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Total</th>
                         </tr>
@@ -101,12 +108,13 @@
                                 <td class="px-4 py-3 text-sm font-medium text-slate-900">{{ $purchase->product?->name }}</td>
                                 <td class="px-4 py-3 text-sm text-slate-700">{{ $purchase->source?->name ?? 'N/A' }}</td>
                                 <td class="px-4 py-3 text-right text-sm text-slate-700">{{ number_format($purchase->unit_price, 2) }}</td>
+                                <td class="px-4 py-3 text-right text-sm text-slate-700">{{ number_format($purchase->product?->selling_price ?? 0, 2) }}</td>
                                 <td class="px-4 py-3 text-right text-sm text-slate-900">{{ number_format($purchase->quantity) }}</td>
                                 <td class="px-4 py-3 text-right text-sm font-semibold text-slate-900">{{ number_format($purchase->total_price, 2) }}</td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="px-4 py-8 text-center text-sm text-slate-500">No purchasing records yet.</td>
+                                <td colspan="7" class="px-4 py-8 text-center text-sm text-slate-500">No purchasing records yet.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -118,4 +126,3 @@
         </div>
     </div>
 </x-app-layout>
-

@@ -7,7 +7,7 @@ use App\Models\Source;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ItemController extends Controller
 {
@@ -125,6 +125,15 @@ class ItemController extends Controller
         $item->update($itemData);
 
         return redirect()->route('items.index')->with('status', 'Item updated successfully.');
+    }
+
+    public function image(string $path): StreamedResponse
+    {
+        $path = ltrim($path, '/');
+
+        abort_unless(Storage::disk('public')->exists($path), 404);
+
+        return Storage::disk('public')->response($path);
     }
 
     private function generateSku(): string

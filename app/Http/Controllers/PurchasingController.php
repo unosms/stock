@@ -33,6 +33,7 @@ class PurchasingController extends Controller
             'source_id' => ['nullable', 'exists:sources,id'],
             'new_source_name' => ['nullable', 'string', 'max:150'],
             'unit_price' => ['required', 'numeric', 'min:0'],
+            'selling_price' => ['required', 'numeric', 'min:0'],
             'quantity' => ['required', 'integer', 'min:1'],
             'note' => ['nullable', 'string', 'max:255'],
             'purchased_at' => ['nullable', 'date'],
@@ -55,6 +56,7 @@ class PurchasingController extends Controller
             $quantity = (int) $validated['quantity'];
             $after = $before + $quantity;
             $price = (float) $validated['unit_price'];
+            $sellingPrice = (float) $validated['selling_price'];
 
             Purchase::create([
                 'product_id' => $item->id,
@@ -70,6 +72,7 @@ class PurchasingController extends Controller
             $item->update([
                 'quantity' => $after,
                 'cost_price' => $price,
+                'selling_price' => $sellingPrice,
                 'source_id' => $sourceId ?? $item->source_id,
             ]);
 
