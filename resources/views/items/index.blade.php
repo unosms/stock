@@ -25,21 +25,14 @@
 
         <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
             <div class="overflow-x-auto">
-                <table class="w-full table-fixed divide-y divide-slate-200">
-                    <colgroup>
-                        <col style="width: 120px;">
-                        <col style="width: 42%;">
-                        <col style="width: 22%;">
-                        <col style="width: 16%;">
-                        <col style="width: 20%;">
-                    </colgroup>
+                <table class="min-w-full table-auto divide-y divide-slate-200">
                     <thead class="bg-slate-50">
                         <tr>
-                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Picture</th>
+                            <th class="w-28 px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Picture</th>
                             <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Item Name</th>
-                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Source</th>
-                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Quantity</th>
-                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Actions</th>
+                            <th class="w-40 px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Source</th>
+                            <th class="w-32 px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Quantity</th>
+                            <th class="w-32 px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 bg-white">
@@ -61,10 +54,10 @@
                                 </td>
                                 <td class="px-4 py-3 align-middle">
                                     <div class="text-sm font-semibold text-slate-900">{{ $item->name }}</div>
-                                    <div class="truncate text-xs text-slate-500">{{ $item->description ?: 'No description' }}</div>
+                                    <div class="text-xs text-slate-500">{{ $item->description ?: 'No description' }}</div>
                                 </td>
-                                <td class="px-4 py-3 align-middle text-sm text-slate-700">{{ $item->source?->name ?? 'N/A' }}</td>
-                                <td class="px-4 py-3 align-middle text-right text-sm font-semibold text-slate-900">{{ number_format($item->quantity) }}</td>
+                                <td class="px-4 py-3 align-middle text-sm text-slate-700 whitespace-nowrap">{{ $item->source?->name ?? 'N/A' }}</td>
+                                <td class="px-4 py-3 align-middle text-right text-sm font-semibold text-slate-900 whitespace-nowrap">{{ number_format($item->quantity) }}</td>
                                 <td class="px-4 py-3 align-middle text-right">
                                     <a href="{{ route('items.edit', $item) }}"
                                         class="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50">

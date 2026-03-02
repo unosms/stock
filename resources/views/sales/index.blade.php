@@ -89,55 +89,11 @@
 
                 <div class="md:col-span-2">
                     <x-primary-button>Save Sale</x-primary-button>
+                    <a href="{{ route('reports.sales') }}" class="ml-2 inline-flex items-center rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+                        View Sales Report
+                    </a>
                 </div>
             </form>
-        </div>
-
-        <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-            <div class="overflow-x-auto">
-                <table class="w-full table-fixed divide-y divide-slate-200">
-                    <colgroup>
-                        <col style="width: 18%;">
-                        <col style="width: 24%;">
-                        <col style="width: 18%;">
-                        <col style="width: 13%;">
-                        <col style="width: 10%;">
-                        <col style="width: 17%;">
-                    </colgroup>
-                    <thead class="bg-slate-50">
-                        <tr>
-                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Date</th>
-                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Customer</th>
-                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Item</th>
-                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Price</th>
-                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Qty</th>
-                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100 bg-white">
-                        @forelse($sales as $sale)
-                            <tr>
-                                <td class="px-4 py-3 align-middle text-sm text-slate-700">{{ $sale->sold_at?->format('Y-m-d H:i') }}</td>
-                                <td class="px-4 py-3 align-middle text-sm text-slate-900">
-                                    <div class="font-medium">{{ $sale->customer_name }}</div>
-                                    <div class="text-xs text-slate-500">{{ $sale->customer_mobile }}</div>
-                                </td>
-                                <td class="px-4 py-3 align-middle text-sm font-medium text-slate-900">{{ $sale->product?->name }}</td>
-                                <td class="px-4 py-3 align-middle text-right text-sm text-slate-700">{{ number_format($sale->unit_price, 2) }}</td>
-                                <td class="px-4 py-3 align-middle text-right text-sm text-slate-900">{{ number_format($sale->quantity) }}</td>
-                                <td class="px-4 py-3 align-middle text-right text-sm font-semibold text-slate-900">{{ number_format($sale->total_price, 2) }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="px-4 py-8 text-center text-sm text-slate-500">No sales records yet.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-            <div class="border-t border-slate-100 px-4 py-3">
-                {{ $sales->links() }}
-            </div>
         </div>
     </div>
 
