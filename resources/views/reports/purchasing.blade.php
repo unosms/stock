@@ -44,7 +44,15 @@
 
         <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
             <div class="overflow-x-auto">
-                <table class="min-w-full table-auto divide-y divide-slate-200">
+                <table class="min-w-full table-fixed divide-y divide-slate-200" style="width:100%;">
+                    <colgroup>
+                        <col style="width:19%;">
+                        <col style="width:20%;">
+                        <col style="width:17%;">
+                        <col style="width:14%;">
+                        <col style="width:12%;">
+                        <col style="width:18%;">
+                    </colgroup>
                     <thead class="bg-slate-50">
                         <tr>
                             <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500 whitespace-nowrap">Date</th>

@@ -25,14 +25,21 @@
 
         <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
             <div class="overflow-x-auto">
-                <table class="min-w-full table-auto divide-y divide-slate-200">
+                <table class="min-w-full table-fixed divide-y divide-slate-200" style="width:100%;">
+                    <colgroup>
+                        <col style="width:14%;">
+                        <col style="width:42%;">
+                        <col style="width:16%;">
+                        <col style="width:14%;">
+                        <col style="width:14%;">
+                    </colgroup>
                     <thead class="bg-slate-50">
                         <tr>
-                            <th class="w-28 px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Picture</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Picture</th>
                             <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Item Name</th>
-                            <th class="w-40 px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Source</th>
-                            <th class="w-32 px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Quantity</th>
-                            <th class="w-32 px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Actions</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Source</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Quantity</th>
+                            <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 bg-white">
