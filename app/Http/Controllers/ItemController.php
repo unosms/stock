@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ItemNamePreset;
 use App\Models\Product;
 use App\Models\Source;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ItemController extends Controller
 {
@@ -36,8 +37,17 @@ class ItemController extends Controller
     public function create()
     {
         $sources = Source::query()->where('is_active', true)->orderBy('name')->get();
+        $itemNamePresets = collect();
 
-        return view('items.create', compact('sources'));
+        if (Schema::hasTable('item_name_presets')) {
+            $itemNamePresets = ItemNamePreset::query()
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->orderBy('name')
+                ->get();
+        }
+
+        return view('items.create', compact('sources', 'itemNamePresets'));
     }
 
     public function store(Request $request)
@@ -73,7 +83,7 @@ class ItemController extends Controller
         ];
 
         if ($request->hasFile('image')) {
-            $itemData['image_path'] = $request->file('image')->store('items', 'public');
+            $itemData['image_path'] = $this->normalizeImagePath($request->file('image')->store('items', 'public'));
         }
 
         Product::create($itemData);
@@ -117,9 +127,9 @@ class ItemController extends Controller
 
         if ($request->hasFile('image')) {
             if ($item->image_path) {
-                Storage::disk('public')->delete($item->image_path);
+                Storage::disk('public')->delete($this->normalizeImagePath($item->image_path));
             }
-            $itemData['image_path'] = $request->file('image')->store('items', 'public');
+            $itemData['image_path'] = $this->normalizeImagePath($request->file('image')->store('items', 'public'));
         }
 
         $item->update($itemData);
@@ -127,13 +137,24 @@ class ItemController extends Controller
         return redirect()->route('items.index')->with('status', 'Item updated successfully.');
     }
 
-    public function image(string $path): StreamedResponse
+    public function image(string $path)
     {
-        $path = urldecode(ltrim($path, '/'));
+        $path = $this->normalizeImagePath(urldecode($path));
+        $withoutPublic = preg_replace('#^public/#', '', $path);
+        $withoutStorage = preg_replace('#^storage/#', '', $withoutPublic);
+        $candidates = array_unique(array_filter([
+            $path,
+            $withoutPublic,
+            $withoutStorage,
+        ]));
 
-        abort_unless(Storage::disk('public')->exists($path), 404);
+        foreach ($candidates as $candidate) {
+            if (Storage::disk('public')->exists($candidate)) {
+                return Storage::disk('public')->response($candidate);
+            }
+        }
 
-        return Storage::disk('public')->response($path);
+        abort(404);
     }
 
     private function generateSku(): string
@@ -143,5 +164,13 @@ class ItemController extends Controller
         } while (Product::query()->where('sku', $sku)->exists());
 
         return $sku;
+    }
+
+    private function normalizeImagePath(?string $path): string
+    {
+        $normalized = str_replace('\\', '/', (string) $path);
+        $normalized = preg_replace('#/+#', '/', $normalized);
+
+        return ltrim($normalized, '/');
     }
 }

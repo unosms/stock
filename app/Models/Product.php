@@ -61,6 +61,10 @@ class Product extends Model
             return null;
         }
 
-        return url('/items/image/' . ltrim($this->image_path, '/'));
+        $path = str_replace('\\', '/', ltrim($this->image_path, '/'));
+        $path = preg_replace('#/+#', '/', $path);
+        $encodedPath = implode('/', array_map('rawurlencode', explode('/', $path)));
+
+        return url('/items/image/' . $encodedPath);
     }
 }

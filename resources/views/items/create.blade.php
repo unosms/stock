@@ -9,16 +9,20 @@
 
             <div>
                 <x-input-label for="name" :value="'Item Name'" />
-                <x-text-input id="name" name="name" type="text" list="predefined-item-names" class="mt-1 block w-full" :value="old('name')" required />
-                <datalist id="predefined-item-names">
-                    <option value="tvbox"></option>
-                    <option value="onu router"></option>
-                    <option value="utp cable"></option>
-                    <option value="wifi router"></option>
-                    <option value="repeater"></option>
-                    <option value="mesh system"></option>
-                    <option value="ftth drop cable"></option>
-                </datalist>
+                @if($itemNamePresets->isNotEmpty())
+                    <select id="name" name="name" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <option value="">Select item name</option>
+                        @foreach($itemNamePresets as $preset)
+                            <option value="{{ $preset->name }}" @selected(old('name') === $preset->name)>{{ $preset->name }}</option>
+                        @endforeach
+                        @if(old('name') && !$itemNamePresets->contains(fn ($preset) => $preset->name === old('name')))
+                            <option value="{{ old('name') }}" selected>{{ old('name') }}</option>
+                        @endif
+                    </select>
+                @else
+                    <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name')" required />
+                @endif
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
 
