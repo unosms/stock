@@ -25,7 +25,14 @@
 
         <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-slate-200">
+                <table class="w-full table-fixed divide-y divide-slate-200">
+                    <colgroup>
+                        <col style="width: 120px;">
+                        <col style="width: 42%;">
+                        <col style="width: 22%;">
+                        <col style="width: 16%;">
+                        <col style="width: 20%;">
+                    </colgroup>
                     <thead class="bg-slate-50">
                         <tr>
                             <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Picture</th>
@@ -38,7 +45,7 @@
                     <tbody class="divide-y divide-slate-100 bg-white">
                         @forelse($items as $item)
                             <tr>
-                                <td class="px-4 py-3">
+                                <td class="px-4 py-3 align-middle">
                                     <div class="overflow-hidden rounded-lg bg-slate-100 ring-1 ring-slate-200"
                                          style="width:56px;height:56px;">
                                         @if($item->image_url)
@@ -52,13 +59,13 @@
                                         @endif
                                     </div>
                                 </td>
-                                <td class="px-4 py-3">
+                                <td class="px-4 py-3 align-middle">
                                     <div class="text-sm font-semibold text-slate-900">{{ $item->name }}</div>
-                                    <div class="max-w-xs truncate text-xs text-slate-500">{{ $item->description ?: 'No description' }}</div>
+                                    <div class="truncate text-xs text-slate-500">{{ $item->description ?: 'No description' }}</div>
                                 </td>
-                                <td class="px-4 py-3 text-sm text-slate-700">{{ $item->source?->name ?? 'N/A' }}</td>
-                                <td class="px-4 py-3 text-right text-sm font-semibold text-slate-900">{{ number_format($item->quantity) }}</td>
-                                <td class="px-4 py-3 text-right">
+                                <td class="px-4 py-3 align-middle text-sm text-slate-700">{{ $item->source?->name ?? 'N/A' }}</td>
+                                <td class="px-4 py-3 align-middle text-right text-sm font-semibold text-slate-900">{{ number_format($item->quantity) }}</td>
+                                <td class="px-4 py-3 align-middle text-right">
                                     <a href="{{ route('items.edit', $item) }}"
                                         class="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50">
                                         Edit

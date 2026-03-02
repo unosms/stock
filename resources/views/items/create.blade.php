@@ -9,7 +9,16 @@
 
             <div>
                 <x-input-label for="name" :value="'Item Name'" />
-                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name')" required />
+                <x-text-input id="name" name="name" type="text" list="predefined-item-names" class="mt-1 block w-full" :value="old('name')" required />
+                <datalist id="predefined-item-names">
+                    <option value="tvbox"></option>
+                    <option value="onu router"></option>
+                    <option value="utp cable"></option>
+                    <option value="wifi router"></option>
+                    <option value="repeater"></option>
+                    <option value="mesh system"></option>
+                    <option value="ftth drop cable"></option>
+                </datalist>
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
 
@@ -53,4 +62,3 @@
         </form>
     </div>
 </x-app-layout>
-
