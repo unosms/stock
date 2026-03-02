@@ -61,6 +61,6 @@ class Product extends Model
             return null;
         }
 
-        return route('items.image', ['path' => $this->image_path]);
+        return url('/items/image/' . ltrim($this->image_path, '/'));
     }
 }

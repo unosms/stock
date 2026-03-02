@@ -129,7 +129,7 @@ class ItemController extends Controller
 
     public function image(string $path): StreamedResponse
     {
-        $path = ltrim($path, '/');
+        $path = urldecode(ltrim($path, '/'));
 
         abort_unless(Storage::disk('public')->exists($path), 404);
 
