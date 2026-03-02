@@ -79,7 +79,7 @@
                 <div>
                     <x-input-label for="sold_at" :value="'Date & Time'" />
                     <x-text-input id="sold_at" name="sold_at" type="datetime-local" class="mt-1 block w-full"
-                        :value="old('sold_at')" />
+                        :value="old('sold_at', now()->format('Y-m-d\\TH:i'))" />
                 </div>
 
                 <div>
@@ -156,4 +156,3 @@
         }
     </script>
 </x-app-layout>
-

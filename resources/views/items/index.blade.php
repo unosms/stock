@@ -39,11 +39,16 @@
                         @forelse($items as $item)
                             <tr>
                                 <td class="px-4 py-3">
-                                    <div class="h-14 w-14 overflow-hidden rounded-lg bg-slate-100 ring-1 ring-slate-200">
+                                    <div class="overflow-hidden rounded-lg bg-slate-100 ring-1 ring-slate-200"
+                                         style="width:56px;height:56px;">
                                         @if($item->image_url)
-                                            <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="h-full w-full object-cover">
+                                            <img src="{{ $item->image_url }}" alt="{{ $item->name }}"
+                                                 style="width:56px;height:56px;object-fit:cover;display:block;">
                                         @else
-                                            <div class="flex h-full items-center justify-center text-xs text-slate-400">No image</div>
+                                            <div class="flex items-center justify-center text-xs text-slate-400"
+                                                 style="width:56px;height:56px;">
+                                                No image
+                                            </div>
                                         @endif
                                     </div>
                                 </td>
@@ -74,4 +79,3 @@
         </div>
     </div>
 </x-app-layout>
-
