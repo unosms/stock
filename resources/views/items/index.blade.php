@@ -66,10 +66,20 @@
                                 <td class="px-4 py-3 align-middle text-sm text-slate-700 whitespace-nowrap">{{ $item->source?->name ?? 'N/A' }}</td>
                                 <td class="px-4 py-3 align-middle text-right text-sm font-semibold text-slate-900 whitespace-nowrap">{{ number_format($item->quantity) }}</td>
                                 <td class="px-4 py-3 align-middle text-right">
-                                    <a href="{{ route('items.edit', $item) }}"
-                                        class="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50">
-                                        Edit
-                                    </a>
+                                    <div class="flex justify-end gap-2">
+                                        <a href="{{ route('items.edit', $item) }}"
+                                            class="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50">
+                                            Edit
+                                        </a>
+                                        <form method="POST" action="{{ route('items.destroy', $item) }}" onsubmit="return confirm('Delete this item?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="rounded-md border border-rose-300 px-3 py-1.5 text-xs font-medium text-rose-700 hover:bg-rose-50">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @empty

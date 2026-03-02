@@ -137,6 +137,17 @@ class ItemController extends Controller
         return redirect()->route('items.index')->with('status', 'Item updated successfully.');
     }
 
+    public function destroy(Product $item)
+    {
+        if ($item->image_path) {
+            Storage::disk('public')->delete($this->normalizeImagePath($item->image_path));
+        }
+
+        $item->delete();
+
+        return redirect()->route('items.index')->with('status', 'Item deleted successfully.');
+    }
+
     public function image(string $path)
     {
         $path = $this->normalizeImagePath(urldecode($path));

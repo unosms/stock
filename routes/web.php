@@ -23,6 +23,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/items/image/{path}', [ItemController::class, 'image'])->where('path', '.*')->name('items.image');
     Route::get('/items/{item}/edit', [ItemController::class, 'edit'])->name('items.edit');
     Route::put('/items/{item}', [ItemController::class, 'update'])->name('items.update');
+    Route::delete('/items/{item}', [ItemController::class, 'destroy'])->name('items.destroy');
 
     Route::get('/purchasing', [PurchasingController::class, 'index'])->name('purchasing.index');
     Route::post('/purchasing', [PurchasingController::class, 'store'])->name('purchasing.store');
