@@ -15,6 +15,7 @@ class Sale extends Model
         'user_id',
         'customer_name',
         'customer_mobile',
+        'mac_address',
         'unit_price',
         'quantity',
         'total_price',

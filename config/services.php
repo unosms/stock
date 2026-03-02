@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'stock' => [
+        'allowed_mac_api_url' => env('STOCK_ALLOWED_MAC_API_URL', 'http://89.43.132.136:62111/api/stock/allowed-mac-addresses'),
+        'allowed_mac_api_timeout' => env('STOCK_ALLOWED_MAC_API_TIMEOUT', 15),
+    ],
+
 ];

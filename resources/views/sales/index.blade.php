@@ -10,6 +10,12 @@
             </div>
         @endif
 
+        @if (session('warning'))
+            <div class="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+                {{ session('warning') }}
+            </div>
+        @endif
+
         @if ($errors->any())
             <div class="rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
                 <ul class="list-disc pl-5">
@@ -33,6 +39,12 @@
                     <x-input-label for="customer_mobile" :value="'Mobile Number'" />
                     <x-text-input id="customer_mobile" name="customer_mobile" type="text" class="mt-1 block w-full"
                         :value="old('customer_mobile')" />
+                </div>
+
+                <div>
+                    <x-input-label for="mac_address" :value="'MAC Address'" />
+                    <x-text-input id="mac_address" name="mac_address" type="text" class="mt-1 block w-full"
+                        :value="old('mac_address')" placeholder="00:1A:2B:3C:4D:5E" />
                 </div>
 
                 <div>
